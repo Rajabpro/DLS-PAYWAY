@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pay Ngobi Alex</title>
+<style>
+  :root{
+    --ink:#0E0A2B;
+    --violet:#5B3DF5;
+    --violet-deep:#3E22C9;
+    --mint:#19E3B1;
+    --lilac:#F4F2FF;
+    --text:#1B1740;
+    --muted:#6C6890;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--text);background:var(--lilac)}
+  section{padding:72px 20px}
+  .wrap{max-width:960px;margin:0 auto}
+
+  /* 1. HERO */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;color:#fff;position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 80% 20%,rgba(91,61,245,.55),transparent 45%),
+      radial-gradient(circle at 10% 90%,rgba(25,227,177,.25),transparent 40%),
+      var(--ink);
+  }
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;width:100%}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.1;margin-bottom:16px}
+  .hero p.sub{color:#C9C4F2;font-size:1.1rem;margin-bottom:28px;max-width:440px}
+  .pay-card{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+    border-radius:20px;padding:22px;backdrop-filter:blur(8px);max-width:440px
+  }
+  .pay-card small{color:#C9C4F2;display:block;margin-bottom:4px}
+  .number{font-size:2rem;font-weight:700;letter-spacing:1px;color:var(--mint)}
+  .name{font-size:1.15rem;margin:2px 0 18px}
+  .btn{
+    display:inline-block;border:0;cursor:pointer;font:inherit;font-weight:600;text-decoration:none;
+    padding:14px 22px;border-radius:14px;background:var(--mint);color:var(--ink);transition:transform .15s
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+
+  /* Phone drawn with CSS (works offline, no image file needed) */
+  .phone-bg{display:flex;justify-content:center}
+  .phone{
+    width:250px;height:500px;border-radius:40px;padding:12px;
+    background:linear-gradient(160deg,#2a2370,#0a0720);
+    border:2px solid rgba(255,255,255,.25);
+    box-shadow:0 30px 80px rgba(91,61,245,.55);
+    transform:rotate(6deg);position:relative
+  }
+  .phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:80px;height:18px;border-radius:12px;background:#000;z-index:2}
+  .screen{
+    height:100%;border-radius:30px;padding:48px 18px 20px;color:#fff;text-align:center;
+    background:linear-gradient(180deg,var(--violet),var(--violet-deep));
+    display:flex;flex-direction:column;align-items:center;gap:12px
+  }
+  .tick{width:70px;height:70px;border-radius:50%;background:var(--mint);color:var(--ink);font-size:2.2rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:30px}
+  .screen b{font-size:1.1rem}
+  .screen span{font-size:.85rem;color:#DDD8FF}
+  .screen .row{margin-top:auto;width:100%;background:rgba(255,255,255,.15);border-radius:14px;padding:12px;font-size:.85rem}
+
+  /* 2. STEPS */
+  .steps{background:var(--violet);color:#fff}
+  .steps h2,.contact h2{font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:28px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .step{background:rgba(255,255,255,.12);border-radius:18px;padding:22px}
+  .step h3{margin-bottom:8px;font-size:1.1rem}
+  .step p{color:#E6E2FF;font-size:.95rem;line-height:1.5}
+
+  /* 3. CONFIRM */
+  .contact{background:var(--lilac)}
+  .contact p{color:var(--muted);margin-bottom:22px;max-width:520px;line-height:1.5}
+  form{display:grid;gap:14px;max-width:420px}
+  label{font-weight:600;font-size:.95rem}
+  input{width:100%;padding:14px;border-radius:12px;border:1.5px solid #D6D1F5;font:inherit;margin-top:6px;background:#fff}
+  input:focus{outline:3px solid rgba(91,61,245,.35);border-color:var(--violet)}
+  .btn.solid{background:var(--violet);color:#fff}
+  footer{background:var(--ink);color:#9D98C8;text-align:center;padding:22px;font-size:.9rem}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;transition:transform .3s;z-index:9}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:760px){
+    .hero .wrap{grid-template-columns:1fr}
+    .phone{width:210px;height:420px;margin:10px auto}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- SECTION 1: HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Make your payment with Airtel Money</h1>
+      <p class="sub">Send your money to the number below, then tell me once it's done.</p>
+      <div class="pay-card">
+        <small>Airtel Money number</small>
+        <div class="number" id="num">0742232074</div>
+        <div class="name">Name: Ngobi Alex</div>
+        <div class="btns">
+          <button class="btn" id="copyBtn">Copy number</button>
+          <a class="btn ghost" href="#confirm">I have paid</a>
+        </div>
+      </div>
+    </div>
+    <div class="phone-bg" aria-hidden="true">
+      <div class="phone">
+        <div class="screen">
+          <div class="tick">&#10003;</div>
+          <b>Send money</b>
+          <span>0742232074</span>
+          <div class="row">Ngobi Alex</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: HOW TO PAY -->
+<section class="steps">
+  <div class="wrap">
+    <h2>How to pay</h2>
+    <div class="grid">
+      <div class="step"><h3>Open Airtel Money</h3><p>Dial *185# or open the Airtel Money app on your phone.</p></div>
+      <div class="step"><h3>Send to the number</h3><p>Choose Send Money and enter 0742232074. Check that the name shows Ngobi Alex.</p></div>
+      <div class="step"><h3>Confirm with your PIN</h3><p>Enter the amount and your PIN. Keep the confirmation message.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: CONFIRM -->
+<section class="contact" id="confirm">
+  <div class="wrap">
+    <h2>Done paying?</h2>
+    <p>Enter your name and the amount you sent. We'll open WhatsApp with a ready message so Alex can confirm your payment.</p>
+    <form id="payForm">
+      <label>Your name
+        <input type="text" id="payer" placeholder="e.g. Sarah" required>
+      </label>
+      <label>Amount sent (UGX)
+        <input type="number" id="amount" placeholder="e.g. 20000" min="1" required>
+      </label>
+      <button class="btn solid" type="submit">Confirm on WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<footer>Payments go to Ngobi Alex &middot; 0742232074</footer>
+<div class="toast" id="toast">Number copied</div>
+
+<script>
+  var toast = document.getElementById('toast');
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 2000);
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var number = '0742232074';
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(number).then(function(){ showToast('Number copied'); },
+        function(){ showToast('Copy failed. Select the number and copy it.'); });
+    } else {
+      showToast('Select the number and copy it.');
+    }
+  });
+
+  document.getElementById('payForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('payer').value.trim();
+    var amount = document.getElementById('amount').value;
+    var msg = 'Hello Alex, I am ' + name + '. I have sent UGX ' + amount + ' to 0742232074 on Airtel Money.';
+    window.open('https://wa.me/256742232074?text=' + encodeURIComponent(msg), '_blank');
+  });
+</script>
+</body>
+</html>
